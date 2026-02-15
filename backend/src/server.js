@@ -1,10 +1,19 @@
 import express from 'express';
 import path from 'path';
+//clerk
+import {clerkMiddleware} from '@clerk/express';
 import {ENV} from "./config/env.js";
+//database connection method
+import {connectDB} from "./config/db.js";
+import { start } from 'repl';
 
 const app = express();
 
 const __dirname = path.resolve()
+
+//calling the middleware
+//to check authentication and authorization of the user
+app.use(clerkMiddleware()); //req.auth
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "success" });
@@ -20,4 +29,13 @@ if (ENV.NODE_ENV == "production") {
   });
 }
 
-app.listen(ENV.PORT, () => console.log('Server is running on port 3000'));
+const startServer = async () => {
+    //database connection method
+  await connectDB();
+  app.listen(ENV.PORT, () => {
+    console.log("Server is running !");
+ 
+});
+};
+
+startServer();
