@@ -2,10 +2,13 @@ import express from 'express';
 import path from 'path';
 //clerk
 import {clerkMiddleware} from '@clerk/express';
+
+import { serve } from "inngest/express";
+import { functions, inngest } from "./config/inngest.js";
+
 import {ENV} from "./config/env.js";
 //database connection method
 import {connectDB} from "./config/db.js";
-import { start } from 'repl';
 
 const app = express();
 
@@ -13,7 +16,10 @@ const __dirname = path.resolve()
 
 //calling the middleware
 //to check authentication and authorization of the user
+app.use(express.json());
 app.use(clerkMiddleware()); //req.auth
+
+app.use("/api/inngest", serve({client: inngest, functions}));
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "success" });
