@@ -5,6 +5,7 @@ import {clerkMiddleware} from '@clerk/express';
 import {ENV} from "./config/env.js";
 //database connection method
 import {connectDB} from "./config/db.js";
+import { start } from 'repl';
 
 const app = express();
 
@@ -28,9 +29,13 @@ if (ENV.NODE_ENV == "production") {
   });
 }
 
-app.listen(ENV.PORT, () => {
-  console.log("Server is running on port");
-
-  //database connection method
-  connectDB();
+const startServer = async () => {
+    //database connection method
+  await connectDB();
+  app.listen(ENV.PORT, () => {
+    console.log("Server is running !");
+ 
 });
+};
+
+startServer();
