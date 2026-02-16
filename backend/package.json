@@ -19,6 +19,7 @@
     "express": "^5.2.1",
     "inngest": "^3.52.0",
     "mongoose": "^8.19.3",
+    "multer": "^2.0.2",
     "shoppingapp": "file:.."
   }
 }

@@ -10,6 +10,9 @@ import {ENV} from "./config/env.js";
 //database connection method
 import {connectDB} from "./config/db.js";
 
+//import 
+import adminRoutes from "./routes/admin.route.js";
+
 const app = express();
 
 const __dirname = path.resolve()
@@ -20,6 +23,9 @@ app.use(express.json());
 app.use(clerkMiddleware()); //req.auth
 
 app.use("/api/inngest", serve({client: inngest, functions}));
+
+//admin.route.js
+app.use("/api/admin",adminRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "success" });
