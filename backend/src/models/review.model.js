@@ -1,19 +1,19 @@
-import moongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 //Object
-const reviewSchema = new moongoose.Schema({
+const reviewSchema = new mongoose.Schema({
     productId:{
-        type:moongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Product',
         required:true,
     },
     userId:{
-        type:moongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true,
     },
     orderId: {
-        type:moongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Order',
         required:true,
     },
@@ -25,4 +25,4 @@ const reviewSchema = new moongoose.Schema({
     }
 }, {timestamps:true});
 
-export const Review = moongoose.model("Review", reviewSchema);
+export const Review = mongoose.model("Review", reviewSchema);

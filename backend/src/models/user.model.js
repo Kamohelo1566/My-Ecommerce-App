@@ -1,6 +1,6 @@
-import moogoose from 'mongoose';
+import mongoose from 'mongoose';
 
-const addressSchema = new moogoose.Schema({
+const addressSchema = new mongoose.Schema({
     label:{
         type:String,
         required:true
@@ -35,7 +35,7 @@ const addressSchema = new moogoose.Schema({
     }
 });
 
-const userSchema = new moogoose.Schema({
+const userSchema = new mongoose.Schema({
     email:{
         type:String,
         required:true,
@@ -57,7 +57,7 @@ const userSchema = new moogoose.Schema({
     addresses: [addressSchema],
     wishlist: [
         {
-            type: moogoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
         },
     ],
@@ -66,4 +66,4 @@ const userSchema = new moogoose.Schema({
 
 );
 
-export const User = moogoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema);

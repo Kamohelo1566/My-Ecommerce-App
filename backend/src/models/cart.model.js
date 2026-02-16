@@ -1,9 +1,9 @@
-import moongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-const cartItemsSchema = new moongoose.Schema({
+const cartItemSchema = new mongoose.Schema({
     //reference to the product
     product: {
-        type:moongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Product',
         required:true,
 
@@ -16,9 +16,9 @@ const cartItemsSchema = new moongoose.Schema({
     },
 });
 
-const cartSchema = new moongoose.Schema({
+const cartSchema = new mongoose.Schema({
     user:{
-        type: moongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true,
     },
@@ -32,4 +32,4 @@ const cartSchema = new moongoose.Schema({
     },
     {timestamps:true});
 
-    export const Cart = moongoose.model("Cart", cartSchema);
+    export const Cart = mongoose.model("Cart", cartSchema);

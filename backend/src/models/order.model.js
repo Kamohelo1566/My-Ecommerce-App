@@ -1,8 +1,8 @@
-import moongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-const orderItemsSchema = new moongoose.Schema({
+const orderItemsSchema = new mongoose.Schema({
     product:{
-        type: moongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:'Product',
         required:true,
     },
@@ -26,7 +26,7 @@ const orderItemsSchema = new moongoose.Schema({
     },
 });
 
-const shippingAddressSchema = new moongoose.Schema({
+const shippingAddressSchema = new mongoose.Schema({
     fullName:{
         type:String,
         required:true,
@@ -53,9 +53,9 @@ const shippingAddressSchema = new moongoose.Schema({
     },
 });
 
-const orderSchema = new moongoose.Schema({
+const orderSchema = new mongoose.Schema({
     user:{
-        type:moongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true,
     },
@@ -93,4 +93,4 @@ const orderSchema = new moongoose.Schema({
 },
 {timestamps:true});
 
-export const Order = moongoose.model("Order", orderSchema);
+export const Order = mongoose.model("Order", orderSchema);
