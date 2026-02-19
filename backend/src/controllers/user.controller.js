@@ -6,6 +6,10 @@ export async function addAddress(req, res) {
 
         const user = req.user;//fetch the user from the request (set by auth middleware)
 
+        if(!fullName || !streetAddress || !city || !province || !postalCode || !phoneNumber){
+            return res.status(400).json({error:"All fields are required"});
+        }
+
         //if this is set at default , unset all other default
         if(isDefault){
             user.addresses.forEach(addr => {addr.isDefault = false});
@@ -99,6 +103,8 @@ export async function deleteAddress(req, res) {
         //delete the address with the given id from user's addresses
         user.addresses.pull(addressId);
         await user.save(); //save the user document after deletion
+
+        res.status(200).json({message: "Address deleted successfully"});
         
     } catch (error) {
         console.error("Error in deleteAddress controller :", error);
@@ -137,6 +143,7 @@ export async function removeFromWishlist(req, res) {
 
         user.wishlist.pull(productId);
         await user.save();
+         res.status(200).json({message: "Product removed from wishlist"});
         
     } catch (error) {
         console.error("Error in removeFromWishlist controller:", error);
@@ -146,7 +153,8 @@ export async function removeFromWishlist(req, res) {
 
 export async function getWishlist(req, res) {
     try {
-        const user = req.user;
+        const user = await User.findById(req.user._id).populate("wishlist");
+
         res.status(200).json({wishlist: user.wishlist});
         
     } catch (error) {
