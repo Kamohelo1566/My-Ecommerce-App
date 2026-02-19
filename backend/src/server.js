@@ -12,6 +12,7 @@ import {connectDB} from "./config/db.js";
 
 //import 
 import adminRoutes from "./routes/admin.route.js";
+import userRoutes from "./routes/user.route.js";
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use("/api/inngest", serve({client: inngest, functions}));
 
 //admin.route.js
 app.use("/api/admin",adminRoutes);
+
+app.use("/api/users",userRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "success" });
