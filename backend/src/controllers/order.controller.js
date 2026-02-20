@@ -53,19 +53,23 @@ export async function getUserOrders(req, res) {
         .populate("orderItems.product")
         .sort({createdAt: -1});
 
+        const orderIds = orders.map((order) => order._id);
+        const reviews = await Review.find({orderId: {$in: orderIds}});
+        const reviewedOrderIds = new Set (reviews.map((review) => review.orderId.toString()));
+
         //check if each order has been reviewed
-        const orderWithReviewStatus = await Promise.all(
+        const ordersWithReviewStatus = await Promise.all(
             orders.map(async (order) => {
-                const review = await Review.findOne ({ orderId: order._id });
+                
                 return {
                     ...order.toObject(),
-                    hasReviewed: !!review,
+                    hasReviewed: reviewedOrderIds.has(order._id.toString()),
                 };
             })
         );
 
 
-        res.status(200).json({orders: orderWithReviewStatus});
+        res.status(200).json({orders: ordersWithReviewStatus});
     }catch (error){
         console.error("Error in getUserOrders controller", error);
         res.status(500).json({message: "Internal Server Error"});
