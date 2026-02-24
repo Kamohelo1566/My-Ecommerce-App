@@ -5,9 +5,11 @@ import {Product} from "../models/product.model.js";
 export async function getCart(req,res){
     try {
         //finds the cart for user (fetching the cart for the logged in user)
-        let cart = await Cart.findOne({clerkId: req.user.clerkId}).populate;
+        let cart = await Cart.findOne({ clerkId: req.user.clerkId }).populate("items.product");
 
         if (!cart){
+            const user = req.user;
+
             cart = await Cart.create({
                 user: user._id,
                 clerkId: user.clerkId,
@@ -40,6 +42,8 @@ try{
     let cart = await Cart.findOne({clerkId: req.user.clerkId});
 
     if (!cart){
+        const user = req.user;
+        
         cart = await Cart.create({
             user: user._id,
             clerkId: user.clerkId,
