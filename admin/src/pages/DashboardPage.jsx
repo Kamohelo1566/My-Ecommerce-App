@@ -15,12 +15,12 @@ function DashboardPage() {
     queryFn: statsApi.getDashboard,
   });
 
-  const recentOrders = ordersData?.orders.slice(0,5) || [];
+  const recentOrders = ordersData?.orders?.slice(0,5) || [];
 
   const statsCards = [
     {
       name: 'Total Revenue',
-      value: statsLoading ? "..." : `R${statsData.totalRevenue.toFixed(2) || 0}`,
+      value: statsLoading ? "..." : `R${statsData?.totalRevenue?.toFixed(2) || 0}`,
     },
 
     {
